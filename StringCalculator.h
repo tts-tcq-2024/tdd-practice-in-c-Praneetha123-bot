@@ -27,20 +27,24 @@ void extract_delimiter(const char* input, char* delimiter) {
 }
 
 void copy_numbers(const char* input, char* numbers) {
-    int j = 0;
-    for (int i = 0; input[i] != '\0'; i++) {
-        if (input[i] != ',' && input[i] != '\n') {
-            numbers[j++] = input[i];
+    const char* current = input;
+    char* output = numbers;
+
+    while (*current != '\0') {
+        if (*current != ',' && *current != '\n') {
+            *output++ = *current;
         }
+        current++;
     }
-    numbers[j] = '\0';
+    *output = '\0';
 }
 
-void handle_delimiters(char* numbers) {
-    for (int i = 0; numbers[i] != '\0'; i++) {
-        if (numbers[i] == '\n') {
-            numbers[i] = ',';
+void replace_newlines_with_commas(char* numbers) {
+    while (*numbers != '\0') {
+        if (*numbers == '\n') {
+            *numbers = ',';
         }
+        numbers++;
     }
 }
 
@@ -51,7 +55,7 @@ void extract_numbers(const char* input, char* numbers) {
     }
 
     copy_numbers(start_pos, numbers);
-    handle_delimiters(numbers);
+    replace_newlines_with_commas(numbers);
 }
 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
