@@ -66,6 +66,13 @@ TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
 TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_1) {
  
     const char*  input = "/1";
-    result = add(input);
+    add(input);
+
+}
+
+TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_2) {
+ 
+    const char*  input = "2/1";
+    add(input);
 
 }
