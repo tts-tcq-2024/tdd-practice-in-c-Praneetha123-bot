@@ -72,6 +72,7 @@ void split_numbers(const char* str, const char* delimiter, int* numbers, int* co
     free(copy_str);
 }
 
+
 bool has_negatives(int* numbers, int size) {
     for (int i = 0; i < size; i++) {
         if (numbers[i] < 0) {
