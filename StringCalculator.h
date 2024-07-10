@@ -31,7 +31,17 @@ void extract_numbers(const char* input, char* numbers) {
     if (is_custom_delimiter(input)) {
         start_pos = strchr(input, '\n') + 1;
     }
-    strcpy(numbers, start_pos);
+
+    // Copy numbers while handling both ',' and '\n' as delimiters
+    int j = 0;
+    for (int i = 0; start_pos[i] != '\0'; i++) {
+        if (start_pos[i] == ',' || start_pos[i] == '\n') {
+            numbers[j++] = ',';
+        } else {
+            numbers[j++] = start_pos[i];
+        }
+    }
+    numbers[j] = '\0';
 }
 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
@@ -74,14 +84,6 @@ void check_negatives(int* numbers, int size) {
     }
 }
 
-void sum_valid_numbers(int* num_array, int num_count, int* sum) {
-    for (int i = 0; i < num_count; i++) {
-        if (num_array[i] <= 1000) {
-            *sum += num_array[i];
-        }
-    }
-}
-
 int add(const char* input) {
     if (!input || !*input) {
         return 0;
@@ -99,7 +101,11 @@ int add(const char* input) {
     check_negatives(num_array, num_count);
 
     int sum = 0;
-    sum_valid_numbers(num_array, num_count, &sum);
+    for (int i = 0; i < num_count; i++) {
+        if (num_array[i] <= 1000) {
+            sum += num_array[i];
+        }
+    }
 
     return sum;
 }
