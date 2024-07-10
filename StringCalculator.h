@@ -31,14 +31,13 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
 }
 
 const char* get_start_position(const char* input) {
-    if (is_custom_delimiter(input)) {
-        if (input[0] == '/') {
-            return strchr(input, '\n') + 1;
-        } else if (input[0] == '\n') {
-            return input + 1; // Skip '\n'
-        }
+    if (input[0] == '/' && input[1] == '/') {
+        return strchr(input, '\n') + 1; // Skip over '//'
     }
-    return input;
+    if (input[0] == '\n') {
+        return input + 1; // Skip '\n'
+    }
+    return input; // Default case
 }
 
 void extract_numbers(const char* input, char* numbers) {
