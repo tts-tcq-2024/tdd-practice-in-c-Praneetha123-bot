@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+ 
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/') || (input[0] == '\n');
 }
-
+ 
 void find_custom_delimiter(const char* input, const char** start_pos, const char** end_pos) {
     if (input[0] == '/') {
         *start_pos = input + 2; // Skip over '//'
@@ -16,12 +16,12 @@ void find_custom_delimiter(const char* input, const char** start_pos, const char
         *end_pos = NULL; // No delimiter after '\n'
     }
 }
-
+ 
 void extract_custom_delimiter(const char* input, char* delimiter) {
     const char* start_pos;
     const char* end_pos;
     find_custom_delimiter(input, &start_pos, &end_pos);
-
+ 
     if (end_pos) {
         strncpy(delimiter, start_pos, end_pos - start_pos);
         delimiter[end_pos - start_pos] = '\0';
@@ -29,48 +29,39 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
         strcpy(delimiter, ",");
     }
 }
-
+ 
 const char* skip_double_slash(const char* input) {
     if (input[0] == '/' && input[1] == '/') {
         return strchr(input, '\n') + 1; // Skip over '//'
     }
     return input;
 }
-
+ 
 const char* skip_newline(const char* input) {
     if (input[0] == '\n') {
         return input + 1; // Skip '\n'
     }
     return input;
 }
-
+ 
 const char* get_start_position(const char* input) {
     return skip_double_slash(skip_newline(input));
 }
-
-void preprocess_input(char* str) {
-    while (*str) {
-        if (*str == '\n') {
-            *str = ',';
-        }
-        str++;
-    }
-}
-
+ 
 void extract_numbers(const char* input, char* numbers) {
     const char* start_pos = get_start_position(input);
     strcpy(numbers, start_pos);
 }
-
+ 
 void parse_input(const char* input, char* delimiter, char* numbers) {
     if (is_custom_delimiter(input)) {
         extract_custom_delimiter(input, delimiter);
     } else {
         strcpy(delimiter, ",");
     }
-    preprocess_input(numbers); // Replace '\n' with ',' before splitting
+    extract_numbers(input, numbers);
 }
-
+ 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
     char* copy_str = strdup(str);
     char* token = strtok(copy_str, delimiter);
@@ -80,7 +71,7 @@ void split_numbers(const char* str, const char* delimiter, int* numbers, int* co
     }
     free(copy_str);
 }
-
+ 
 bool has_negatives(int* numbers, int size) {
     for (int i = 0; i < size; i++) {
         if (numbers[i] < 0) {
@@ -89,7 +80,7 @@ bool has_negatives(int* numbers, int size) {
     }
     return false;
 }
-
+ 
 void construct_negative_message(int* numbers, int size, char* message) {
     strcpy(message, "negatives not allowed: ");
     for (int i = 0; i < size; i++) {
@@ -101,7 +92,7 @@ void construct_negative_message(int* numbers, int size, char* message) {
         }
     }
 }
-
+ 
 void check_negatives(int* numbers, int size) {
     if (has_negatives(numbers, size)) {
         char message[256];
@@ -110,7 +101,7 @@ void check_negatives(int* numbers, int size) {
         exit(EXIT_FAILURE);
     }
 }
-
+ 
 void sum_valid_numbers(int* num_array, int num_count, int* sum) {
     for (int i = 0; i < num_count; i++) {
         if (num_array[i] <= 1000) {
@@ -118,24 +109,24 @@ void sum_valid_numbers(int* num_array, int num_count, int* sum) {
         }
     }
 }
-
+ 
 int add(const char* input) {
     if (!input || !*input) {
-        return 0; // Handle empty input
+        return 0;
     }
-
+ 
     char delimiter[10] = {0};
     char numbers[1000] = {0};
-    parse_input(input, delimiter, numbers); // Parse input to get delimiter and numbers
-
+    parse_input(input, delimiter, numbers);
+ 
     int num_array[1000];
     int num_count = 0;
-    split_numbers(numbers, delimiter, num_array, &num_count); // Split numbers using delimiter
-
-    check_negatives(num_array, num_count); // Check for negative numbers
-
+    split_numbers(numbers, delimiter, num_array, &num_count);
+ 
+    check_negatives(num_array, num_count);
+ 
     int sum = 0;
-    sum_valid_numbers(num_array, num_count, &sum); // Calculate sum of valid numbers
-
+    sum_valid_numbers(num_array, num_count, &sum);
+ 
     return sum;
 }
