@@ -121,9 +121,13 @@ void sum_valid_numbers(int* num_array, int num_count, int* sum) {
 }
 
 int add(const char* input) {
-    if (input == NULL || input[0] == '\0') {
+ if (input == NULL) {
     return 0;
 }
+if (*input == '\0') {
+    return 0;
+}
+
 
     char delimiter[10] = {0};
     char numbers[1000] = {0};
