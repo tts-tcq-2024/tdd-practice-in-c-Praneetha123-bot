@@ -76,3 +76,10 @@ TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_2) {
     add(input);
 
 }
+
+TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_3) {
+ 
+    const char*  input = "//,|;2";
+    add(input);
+
+}
