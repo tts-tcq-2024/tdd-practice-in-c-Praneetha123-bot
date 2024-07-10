@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-
 void check_negatives(int* numbers, int size) {
     bool has_negative = false;
     char message[256] = "negatives not allowed: ";
@@ -37,9 +36,8 @@ void extract_delimiter_and_numbers(const char* input, char* delimiter, char* num
 }
 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
-    char* token;
     char* copy_str = strdup(str);
-    token = strtok(copy_str, delimiter);
+    char* token = strtok(copy_str, delimiter);
     while (token) {
         numbers[(*count)++] = atoi(token);
         token = strtok(NULL, delimiter);
