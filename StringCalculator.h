@@ -2,7 +2,48 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "StringCalculator.h"
 
+void extract_delimiter(const char* input, char* delimiter) {
+    if (is_custom_delimiter(input)) {
+        extract_custom_delimiter(input, delimiter);
+    } else {
+        strcpy(delimiter, ",");
+    }
+}
+
+bool is_custom_delimiter(const char* input) {
+    return (input[0] == '/' && input[1] == '/');
+}
+
+void extract_custom_delimiter(const char* input, char* delimiter) {
+    const char* newline_pos = strchr(input, '\n');
+    if (newline_pos) {
+        strncpy(delimiter, input + 2, newline_pos - input - 2);
+        delimiter[newline_pos - input - 2] = '\0';
+    }
+}
+
+void extract_numbers(const char* input, char* numbers) {
+    if (is_custom_delimiter(input)) {
+        const char* newline_pos = strchr(input, '\n');
+        if (newline_pos) {
+            strcpy(numbers, newline_pos + 1);
+        }
+    } else {
+        strcpy(numbers, input);
+    }
+}
+
+void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
+    char* copy_str = strdup(str);
+    char* token = strtok(copy_str, delimiter);
+    while (token) {
+        numbers[(*count)++] = atoi(token);
+        token = strtok(NULL, delimiter);
+    }
+    free(copy_str);
+}
 
 bool has_negatives(int* numbers, int size) {
     for (int i = 0; i < size; i++) {
@@ -32,39 +73,6 @@ void check_negatives(int* numbers, int size) {
         fprintf(stderr, "%s\n", message);
         exit(EXIT_FAILURE);
     }
-}
-
-void extract_delimiter(const char* input, char* delimiter) {
-    if (input[0] == '/' && input[1] == '/') {
-        const char* newline_pos = strchr(input, '\n');
-        if (newline_pos) {
-            strncpy(delimiter, input + 2, newline_pos - input - 2);
-            delimiter[newline_pos - input - 2] = '\0';
-        }
-    } else {
-        strcpy(delimiter, ",");
-    }
-}
-
-void extract_numbers(const char* input, char* numbers) {
-    if (input[0] == '/' && input[1] == '/') {
-        const char* newline_pos = strchr(input, '\n');
-        if (newline_pos) {
-            strcpy(numbers, newline_pos + 1);
-        }
-    } else {
-        strcpy(numbers, input);
-    }
-}
-
-void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
-    char* copy_str = strdup(str);
-    char* token = strtok(copy_str, delimiter);
-    while (token) {
-        numbers[(*count)++] = atoi(token);
-        token = strtok(NULL, delimiter);
-    }
-    free(copy_str);
 }
 
 int add(const char* input) {
