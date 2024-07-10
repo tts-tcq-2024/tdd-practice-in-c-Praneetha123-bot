@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/') || (input[0] == '\n');
 }
