@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/');
 }
@@ -75,6 +74,14 @@ void check_negatives(int* numbers, int size) {
     }
 }
 
+void sum_valid_numbers(int* num_array, int num_count, int* sum) {
+    for (int i = 0; i < num_count; i++) {
+        if (num_array[i] <= 1000) {
+            *sum += num_array[i];
+        }
+    }
+}
+
 int add(const char* input) {
     if (!input || !*input) {
         return 0;
@@ -92,11 +99,7 @@ int add(const char* input) {
     check_negatives(num_array, num_count);
 
     int sum = 0;
-    for (int i = 0; i < num_count; i++) {
-        if (num_array[i] <= 1000) {
-            sum += num_array[i];
-        }
-    }
+    sum_valid_numbers(num_array, num_count, &sum);
 
     return sum;
 }
