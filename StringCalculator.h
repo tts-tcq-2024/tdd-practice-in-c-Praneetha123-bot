@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "StringCalculator.h"
+
  
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/');
