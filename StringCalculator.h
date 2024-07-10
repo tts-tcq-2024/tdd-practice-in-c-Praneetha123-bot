@@ -3,34 +3,56 @@
 #include <string.h>
 #include <stdbool.h>
 
-void check_negatives(int* numbers, int size) {
-    bool has_negative = false;
-    char message[256] = "negatives not allowed: ";
+
+bool has_negatives(int* numbers, int size) {
+    for (int i = 0; i < size; i++) {
+        if (numbers[i] < 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void construct_negative_message(int* numbers, int size, char* message) {
+    strcpy(message, "negatives not allowed: ");
     for (int i = 0; i < size; i++) {
         if (numbers[i] < 0) {
             char num_str[12];
             snprintf(num_str, sizeof(num_str), "%d", numbers[i]);
             strcat(message, num_str);
             strcat(message, " ");
-            has_negative = true;
         }
     }
-    if (has_negative) {
+}
+
+void check_negatives(int* numbers, int size) {
+    if (has_negatives(numbers, size)) {
+        char message[256];
+        construct_negative_message(numbers, size, message);
         fprintf(stderr, "%s\n", message);
         exit(EXIT_FAILURE);
     }
 }
 
-void extract_delimiter_and_numbers(const char* input, char* delimiter, char* numbers) {
+void extract_delimiter(const char* input, char* delimiter) {
     if (input[0] == '/' && input[1] == '/') {
         const char* newline_pos = strchr(input, '\n');
         if (newline_pos) {
             strncpy(delimiter, input + 2, newline_pos - input - 2);
             delimiter[newline_pos - input - 2] = '\0';
-            strcpy(numbers, newline_pos + 1);
         }
     } else {
         strcpy(delimiter, ",");
+    }
+}
+
+void extract_numbers(const char* input, char* numbers) {
+    if (input[0] == '/' && input[1] == '/') {
+        const char* newline_pos = strchr(input, '\n');
+        if (newline_pos) {
+            strcpy(numbers, newline_pos + 1);
+        }
+    } else {
         strcpy(numbers, input);
     }
 }
@@ -52,7 +74,8 @@ int add(const char* input) {
 
     char delimiter[10] = {0};
     char numbers[1000] = {0};
-    extract_delimiter_and_numbers(input, delimiter, numbers);
+    extract_delimiter(input, delimiter);
+    extract_numbers(input, numbers);
 
     int num_array[1000];
     int num_count = 0;
