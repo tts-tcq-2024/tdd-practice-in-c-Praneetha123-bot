@@ -63,3 +63,9 @@ TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
     ASSERT_EQ(result, expectedresult);
 }
 
+TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_1) {
+    int expectedresult = 1;
+    const char*  input = "/1";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
+}
