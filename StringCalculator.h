@@ -30,15 +30,19 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
     }
 }
 
-void extract_numbers(const char* input, char* numbers) {
-    const char* start_pos = input;
+const char* get_start_position(const char* input) {
     if (is_custom_delimiter(input)) {
         if (input[0] == '/') {
-            start_pos = strchr(input, '\n') + 1;
+            return strchr(input, '\n') + 1;
         } else if (input[0] == '\n') {
-            start_pos += 1; // Skip '\n'
+            return input + 1; // Skip '\n'
         }
     }
+    return input;
+}
+
+void extract_numbers(const char* input, char* numbers) {
+    const char* start_pos = get_start_position(input);
     strcpy(numbers, start_pos);
 }
 
