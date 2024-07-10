@@ -30,14 +30,22 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
     }
 }
 
-const char* get_start_position(const char* input) {
+const char* skip_double_slash(const char* input) {
     if (input[0] == '/' && input[1] == '/') {
         return strchr(input, '\n') + 1; // Skip over '//'
     }
+    return input;
+}
+
+const char* skip_newline(const char* input) {
     if (input[0] == '\n') {
         return input + 1; // Skip '\n'
     }
-    return input; // Default case
+    return input;
+}
+
+const char* get_start_position(const char* input) {
+    return skip_double_slash(skip_newline(input));
 }
 
 void extract_numbers(const char* input, char* numbers) {
