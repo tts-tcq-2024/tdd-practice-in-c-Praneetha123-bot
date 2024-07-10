@@ -79,7 +79,7 @@ TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_2) {
 
 TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_3) {
  
-    const char*  input = "2/1";
+    const char*  input = "//;2/1,-1";
     add(input);
 
 }
