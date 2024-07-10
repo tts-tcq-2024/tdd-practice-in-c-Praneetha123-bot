@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "StringCalculator.h"
 
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/');
@@ -26,26 +27,19 @@ void extract_delimiter(const char* input, char* delimiter) {
     }
 }
 
-void copy_number(const char** input, char** numbers) {
-    if (**input == ',' || **input == '\n') {
-        *(*numbers)++ = ',';
-        (*input)++;
-    } else {
-        while (**input && **input != ',' && **input != '\n') {
-            *(*numbers)++ = *(*input)++;
+void copy_numbers_with_delimiters(const char* input, char* numbers) {
+    while (*input) {
+        if (*input == ',' || *input == '\n') {
+            *numbers++ = ',';  // Append ',' directly
+            input++;           // Move to the next character
+        } else {
+            // Copy until a delimiter or end of string
+            while (*input && *input != ',' && *input != '\n') {
+                *numbers++ = *input++;
+            }
         }
     }
-}
-
-
-void copy_numbers(const char* input, char* numbers) {
-    const char* input_ptr = input;
-    char* numbers_ptr = numbers;
-    
-    while (*input_ptr) {
-        copy_number(&input_ptr, &numbers_ptr);
-    }
-    *numbers_ptr = '\0';
+    *numbers = '\0';  // Null-terminate the numbers string
 }
 
 void extract_numbers(const char* input, char* numbers) {
@@ -54,7 +48,7 @@ void extract_numbers(const char* input, char* numbers) {
         start_pos = strchr(input, '\n') + 1;
     }
 
-    copy_numbers(start_pos, numbers);
+    copy_numbers_with_delimiters(start_pos, numbers);
 }
 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
