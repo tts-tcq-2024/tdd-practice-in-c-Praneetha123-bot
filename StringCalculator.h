@@ -17,22 +17,22 @@ bool is_custom_delimiter(const char* input) {
 }
 
 void extract_custom_delimiter(const char* input, char* delimiter) {
-    const char* newline_pos = strchr(input, '\n');
-    if (newline_pos) {
-        strncpy(delimiter, input + 2, newline_pos - input - 2);
-        delimiter[newline_pos - input - 2] = '\0';
+    const char* start_pos = input + 2; // Skip over '//'
+    const char* end_pos = strchr(start_pos, '\n');
+    if (end_pos) {
+        strncpy(delimiter, start_pos, end_pos - start_pos);
+        delimiter[end_pos - start_pos] = '\0';
+    } else {
+        strcpy(delimiter, ",");
     }
 }
 
 void extract_numbers(const char* input, char* numbers) {
+    const char* start_pos = input;
     if (is_custom_delimiter(input)) {
-        const char* newline_pos = strchr(input, '\n');
-        if (newline_pos) {
-            strcpy(numbers, newline_pos + 1);
-        }
-    } else {
-        strcpy(numbers, input);
+        start_pos = strchr(input, '\n') + 1;
     }
+    strcpy(numbers, start_pos);
 }
 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
