@@ -3,11 +3,10 @@
 #include <string.h>
 #include <stdbool.h>
 
- 
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/');
 }
- 
+
 void extract_custom_delimiter(const char* input, char* delimiter) {
     const char* start_pos = input + 2; // Skip over '//'
     const char* end_pos = strchr(start_pos, '\n');
@@ -18,7 +17,7 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
         strcpy(delimiter, ",");
     }
 }
- 
+
 void extract_delimiter(const char* input, char* delimiter) {
     if (is_custom_delimiter(input)) {
         extract_custom_delimiter(input, delimiter);
@@ -27,19 +26,23 @@ void extract_delimiter(const char* input, char* delimiter) {
     }
 }
 
-void copy_numbers_with_delimiters(const char* input, char* numbers) {
+void copy_numbers(const char* input, char* numbers) {
     int j = 0;
     for (int i = 0; input[i] != '\0'; i++) {
-        if (input[i] == ',' || input[i] == '\n') {
-            numbers[j++] = ',';
-        } else {
+        if (input[i] != ',' && input[i] != '\n') {
             numbers[j++] = input[i];
         }
     }
     numbers[j] = '\0';
 }
 
-
+void handle_delimiters(char* numbers) {
+    for (int i = 0; numbers[i] != '\0'; i++) {
+        if (numbers[i] == '\n') {
+            numbers[i] = ',';
+        }
+    }
+}
 
 void extract_numbers(const char* input, char* numbers) {
     const char* start_pos = input;
@@ -47,10 +50,10 @@ void extract_numbers(const char* input, char* numbers) {
         start_pos = strchr(input, '\n') + 1;
     }
 
-    copy_numbers_with_delimiters(start_pos, numbers);
+    copy_numbers(start_pos, numbers);
+    handle_delimiters(numbers);
 }
 
- 
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
     char* copy_str = strdup(str);
     char* token = strtok(copy_str, delimiter);
@@ -60,7 +63,7 @@ void split_numbers(const char* str, const char* delimiter, int* numbers, int* co
     }
     free(copy_str);
 }
- 
+
 bool has_negatives(int* numbers, int size) {
     for (int i = 0; i < size; i++) {
         if (numbers[i] < 0) {
@@ -69,7 +72,7 @@ bool has_negatives(int* numbers, int size) {
     }
     return false;
 }
- 
+
 void construct_negative_message(int* numbers, int size, char* message) {
     strcpy(message, "negatives not allowed: ");
     for (int i = 0; i < size; i++) {
@@ -81,7 +84,7 @@ void construct_negative_message(int* numbers, int size, char* message) {
         }
     }
 }
- 
+
 void check_negatives(int* numbers, int size) {
     if (has_negatives(numbers, size)) {
         char message[256];
@@ -90,7 +93,7 @@ void check_negatives(int* numbers, int size) {
         exit(EXIT_FAILURE);
     }
 }
- 
+
 void sum_valid_numbers(int* num_array, int num_count, int* sum) {
     for (int i = 0; i < num_count; i++) {
         if (num_array[i] <= 1000) {
@@ -98,25 +101,25 @@ void sum_valid_numbers(int* num_array, int num_count, int* sum) {
         }
     }
 }
- 
+
 int add(const char* input) {
     if (!input || !*input) {
         return 0;
     }
- 
+
     char delimiter[10] = {0};
     char numbers[1000] = {0};
     extract_delimiter(input, delimiter);
     extract_numbers(input, numbers);
- 
+
     int num_array[1000];
     int num_count = 0;
     split_numbers(numbers, delimiter, num_array, &num_count);
- 
+
     check_negatives(num_array, num_count);
- 
+
     int sum = 0;
     sum_valid_numbers(num_array, num_count, &sum);
- 
+
     return sum;
 }
