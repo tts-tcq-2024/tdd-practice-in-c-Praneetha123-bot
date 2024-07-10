@@ -50,7 +50,15 @@ TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiterAtStart) {
     ASSERT_EQ(result, expectedresult);
 }
 
-TEST(StringCalculatorAddTests, ExpectSumWithNegativenumber) {
-    const char*  input = "2,-1";
-    add(input);
+// Test case for handling negative numbers
+TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
+    const char* input = "1,3,-4";
+    
+    try {
+        int result = add(input);
+        FAIL() << "Expected exception for negative numbers.";
+    } catch (const std::exception& e) {
+        EXPECT_STREQ("negatives not allowed: -4 ", e.what());
+    }
 }
+
