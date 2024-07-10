@@ -3,10 +3,12 @@
 #include <string.h>
 #include <stdbool.h>
 
+// Function to check if the input has a custom delimiter
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/') || (input[0] == '\n');
 }
 
+// Function to find custom delimiter and its end position
 void find_custom_delimiter(const char* input, const char** start_pos, const char** end_pos) {
     if (input[0] == '/') {
         *start_pos = input + 2; // Skip over '//'
@@ -17,6 +19,7 @@ void find_custom_delimiter(const char* input, const char** start_pos, const char
     }
 }
 
+// Function to extract custom delimiter
 void extract_custom_delimiter(const char* input, char* delimiter) {
     const char* start_pos;
     const char* end_pos;
@@ -30,6 +33,7 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
     }
 }
 
+// Function to skip over double slash custom delimiter
 const char* skip_double_slash(const char* input) {
     if (input[0] == '/' && input[1] == '/') {
         return strchr(input, '\n') + 1; // Skip over '//'
@@ -37,6 +41,7 @@ const char* skip_double_slash(const char* input) {
     return input;
 }
 
+// Function to skip newline custom delimiter
 const char* skip_newline(const char* input) {
     if (input[0] == '\n') {
         return input + 1; // Skip '\n'
@@ -44,15 +49,18 @@ const char* skip_newline(const char* input) {
     return input;
 }
 
+// Function to get starting position for numbers after skipping delimiters
 const char* get_start_position(const char* input) {
     return skip_double_slash(skip_newline(input));
 }
 
+// Function to extract numbers after skipping delimiters
 void extract_numbers(const char* input, char* numbers) {
     const char* start_pos = get_start_position(input);
     strcpy(numbers, start_pos);
 }
 
+// Function to parse input and extract delimiter and numbers
 void parse_input(const char* input, char* delimiter, char* numbers) {
     if (is_custom_delimiter(input)) {
         extract_custom_delimiter(input, delimiter);
@@ -62,6 +70,7 @@ void parse_input(const char* input, char* delimiter, char* numbers) {
     extract_numbers(input, numbers);
 }
 
+// Function to split numbers based on delimiter and convert to integers
 void split_numbers(const char* str, const char* delimiter, int* numbers, int* count) {
     char* copy_str = strdup(str);
     char* token = strtok(copy_str, delimiter);
@@ -72,7 +81,7 @@ void split_numbers(const char* str, const char* delimiter, int* numbers, int* co
     free(copy_str);
 }
 
-
+// Function to check if there are negative numbers in the array
 bool has_negatives(int* numbers, int size) {
     for (int i = 0; i < size; i++) {
         if (numbers[i] < 0) {
@@ -82,6 +91,7 @@ bool has_negatives(int* numbers, int size) {
     return false;
 }
 
+// Function to construct message for negative numbers
 void construct_negative_message(int* numbers, int size, char* message) {
     strcpy(message, "negatives not allowed: ");
     for (int i = 0; i < size; i++) {
@@ -94,6 +104,7 @@ void construct_negative_message(int* numbers, int size, char* message) {
     }
 }
 
+// Function to check for negatives and print error message if found
 void check_negatives(int* numbers, int size) {
     if (has_negatives(numbers, size)) {
         char message[256];
@@ -103,6 +114,7 @@ void check_negatives(int* numbers, int size) {
     }
 }
 
+// Function to sum valid numbers (less than or equal to 1000)
 void sum_valid_numbers(int* num_array, int num_count, int* sum) {
     for (int i = 0; i < num_count; i++) {
         if (num_array[i] <= 1000) {
@@ -111,23 +123,25 @@ void sum_valid_numbers(int* num_array, int num_count, int* sum) {
     }
 }
 
+// Main function to add numbers based on input string
 int add(const char* input) {
     if (!input || !*input) {
-        return 0;
+        return 0; // Handle empty input
     }
 
     char delimiter[10] = {0};
     char numbers[1000] = {0};
-    parse_input(input, delimiter, numbers);
+    parse_input(input, delimiter, numbers); // Parse input to get delimiter and numbers
 
     int num_array[1000];
     int num_count = 0;
-    split_numbers(numbers, delimiter, num_array, &num_count);
+    split_numbers(numbers, delimiter, num_array, &num_count); // Split numbers using delimiter
 
-    check_negatives(num_array, num_count);
+    check_negatives(num_array, num_count); // Check for negative numbers
 
     int sum = 0;
-    sum_valid_numbers(num_array, num_count, &sum);
+    sum_valid_numbers(num_array, num_count, &sum); // Calculate sum of valid numbers
 
     return sum;
 }
+
