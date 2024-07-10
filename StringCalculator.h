@@ -108,7 +108,7 @@ void check_negatives(int* numbers, int size) {
         char message[256];
         construct_negative_message(numbers, size, message);
         fprintf(stderr, "%s\n", message);
-        exit(EXIT_FAILURE);
+       // exit(EXIT_FAILURE);
     }
 }
 
