@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "StringCalculator.h"
+
 
 void extract_delimiter(const char* input, char* delimiter) {
     if (is_custom_delimiter(input)) {
