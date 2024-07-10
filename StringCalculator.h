@@ -82,35 +82,35 @@ void split_numbers(const char* str, const char* delimiter, int* numbers, int* co
     free(copy_str);
 }
 
-// bool has_negatives(int* numbers, int size) {
-//     for (int i = 0; i < size; i++) {
-//         if (numbers[i] < 0) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+bool has_negatives(int* numbers, int size) {
+    for (int i = 0; i < size; i++) {
+        if (numbers[i] < 0) {
+            return true;
+        }
+    }
+    return false;
+}
 
-// void construct_negative_message(int* numbers, int size, char* message) {
-//     strcpy(message, "negatives not allowed: ");
-//     for (int i = 0; i < size; i++) {
-//         if (numbers[i] < 0) {
-//             char num_str[12];
-//             snprintf(num_str, sizeof(num_str), "%d", numbers[i]);
-//             strcat(message, num_str);
-//             strcat(message, " ");
-//         }
-//     }
-// }
+void construct_negative_message(int* numbers, int size, char* message) {
+    strcpy(message, "negatives not allowed: ");
+    for (int i = 0; i < size; i++) {
+        if (numbers[i] < 0) {
+            char num_str[12];
+            snprintf(num_str, sizeof(num_str), "%d", numbers[i]);
+            strcat(message, num_str);
+            strcat(message, " ");
+        }
+    }
+}
 
-// void check_negatives(int* numbers, int size) {
-//     if (has_negatives(numbers, size)) {
-//         char message[256];
-//         construct_negative_message(numbers, size, message);
-//         fprintf(stderr, "%s\n", message);
-//         exit(EXIT_FAILURE);
-//     }
-// }
+void check_negatives(int* numbers, int size) {
+    if (has_negatives(numbers, size)) {
+        char message[256];
+        construct_negative_message(numbers, size, message);
+        fprintf(stderr, "%s\n", message);
+        exit(EXIT_FAILURE);
+    }
+}
 
 void sum_valid_numbers(int* num_array, int num_count, int* sum) {
     for (int i = 0; i < num_count; i++) {
@@ -133,7 +133,7 @@ int add(const char* input) {
     int num_count = 0;
     split_numbers(numbers, delimiter, num_array, &num_count);
 
-    //check_negatives(num_array, num_count);
+    check_negatives(num_array, num_count);
 
     int sum = 0;
     sum_valid_numbers(num_array, num_count, &sum);
