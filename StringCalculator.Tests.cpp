@@ -79,7 +79,7 @@ TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_2) {
 
 TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_3) {
  
-    const char*  input = "//***\n1***2***3";
+    const char*  input = "//[***]\n1***2***3\n4,5";
     add(input);
 
 }
