@@ -4,14 +4,6 @@
 #include <stdbool.h>
 
 
-void extract_delimiter(const char* input, char* delimiter) {
-    if (is_custom_delimiter(input)) {
-        extract_custom_delimiter(input, delimiter);
-    } else {
-        strcpy(delimiter, ",");
-    }
-}
-
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/');
 }
@@ -22,6 +14,14 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
     if (end_pos) {
         strncpy(delimiter, start_pos, end_pos - start_pos);
         delimiter[end_pos - start_pos] = '\0';
+    } else {
+        strcpy(delimiter, ",");
+    }
+}
+
+void extract_delimiter(const char* input, char* delimiter) {
+    if (is_custom_delimiter(input)) {
+        extract_custom_delimiter(input, delimiter);
     } else {
         strcpy(delimiter, ",");
     }
