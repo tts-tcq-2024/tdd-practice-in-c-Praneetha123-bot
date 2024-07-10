@@ -54,12 +54,12 @@ TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiterAtStart) {
 TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
     const char* input = "1,3,-4";
      add(input);
-   // EXPECT_STREQ("negatives not allowed: -4 ", e.what());
-   //  // try {
-   //      int result = add(input);
-   //      // FAIL() << "Expected exception for negative numbers.";
-   //  // } catch (const std::exception& e) {
-   //      EXPECT_STREQ("negatives not allowed: -4 ", e.what());
-   // // }
+}
+
+TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
+    int expectedresult = 0;
+    const char*  input = "";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
 }
 
