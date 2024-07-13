@@ -21,7 +21,6 @@ const char* skip_delimiter_definition(const char* input) {
     if (has_custom_delimiter(input)) {
         return strchr(input, '\n') + 1; // Skip over "//[delimiter]\n"
     }
-    return input;
 }
 
 void split_numbers(const char* input, const char* delimiters, int* numbers, int* count) {
