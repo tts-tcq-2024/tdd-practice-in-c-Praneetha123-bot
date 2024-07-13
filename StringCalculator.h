@@ -15,9 +15,9 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
  delimiter[length] = '\0'; // Null-terminate the delimiter
 }
 
-const char* skip_delimiter_definition(const char* input) {
- return has_custom_delimiter(input) ? strchr(input, '\n') + 1 : input;
-}
+// const char* skip_delimiter_definition(const char* input) {
+//  return has_custom_delimiter(input) ? strchr(input, '\n') + 1 : input;
+// }
 
 void split_numbers(const char* input, const char* delimiters, int* numbers, int* count) {
     char* copy = strdup(input);
@@ -74,7 +74,7 @@ int add(const char* input) {
     char delimiter[10] = ",\n";
     if (has_custom_delimiter(input)) {
        extract_custom_delimiter(input, delimiter);
-        input = skip_delimiter_definition(input);
+       // input = skip_delimiter_definition(input);
     }
 
     return parse_and_calculate(input, delimiter);
