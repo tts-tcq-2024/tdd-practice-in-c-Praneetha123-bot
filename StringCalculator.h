@@ -13,9 +13,7 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
     if (end) {
         strncpy(delimiter, start, end - start);
         delimiter[end - start] = '\0';
-    } else {
-        strcpy(delimiter, ",");
-    }
+    } 
 }
 
 const char* skip_delimiter_definition(const char* input) {
