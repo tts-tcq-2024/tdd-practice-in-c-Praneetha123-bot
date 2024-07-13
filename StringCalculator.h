@@ -8,14 +8,12 @@ bool has_custom_delimiter(const char* input) {
 }
 
 
-// void extract_custom_delimiter(const char* input, char* delimiter) {
-//     const char* start = input + 2; // Skip over "//"
-//     const char* end = strchr(start, '\n');
-//     if (end) {
-//         strncpy(delimiter, start, end - start);
-//         delimiter[end - start] = '\0';
-//     } 
-// }
+void extract_custom_delimiter(const char* input, char* delimiter) {
+ const char* start = input + 2; // Skip over "//"
+ size_t length = strcspn(start, "\n"); // Find the position of the newline character
+ strncpy(delimiter, start, length); // Copy the delimiter
+ delimiter[length] = '\0'; // Null-terminate the delimiter
+}
 
 const char* skip_delimiter_definition(const char* input) {
  return has_custom_delimiter(input) ? strchr(input, '\n') + 1 : input;
@@ -75,7 +73,7 @@ int add(const char* input) {
 
     char delimiter[10] = ",\n";
     if (has_custom_delimiter(input)) {
-//        extract_custom_delimiter(input, delimiter);
+       extract_custom_delimiter(input, delimiter);
         input = skip_delimiter_definition(input);
     }
 
