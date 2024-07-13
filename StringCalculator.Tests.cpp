@@ -50,11 +50,11 @@ TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiter) {
 //     ASSERT_EQ(result, expectedresult);
 // }
 
-// // Test case for handling negative numbers
-// TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
-//     const char* input = "1,-3,-4";
-//      add(input);
-// }
+// Test case for handling negative numbers
+TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
+    const char* input = "1,-3,-4";
+     add(input);
+}
 
 // TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
 //     int expectedresult = 0;
