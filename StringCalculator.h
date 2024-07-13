@@ -124,8 +124,6 @@ int add(const char* input) {
 if (*input == '\0') {
     return 0;
 }
-
-
     char delimiter[10] = {0};
     char numbers[1000] = {0};
     parse_input(input, delimiter, numbers);
