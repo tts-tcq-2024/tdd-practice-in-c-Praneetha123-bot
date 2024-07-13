@@ -56,12 +56,13 @@ TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
      add(input);
 }
 
-// TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
-//     int expectedresult = 0;
-//     const char*  input = "";
-//     int result = add(input);
-//     ASSERT_EQ(result, expectedresult);
-// }
+//Test case for empty string
+TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
+    int expectedresult = 0;
+    const char*  input = "";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
+}
 
 // TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_1) {
  
