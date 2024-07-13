@@ -7,6 +7,7 @@ bool has_custom_delimiter(const char* input) {
     return input[0] == '/' && input[1] == '/';
 }
 
+
 void extract_custom_delimiter(const char* input, char* delimiter) {
     const char* start = input + 2; // Skip over "//"
     const char* end = strchr(start, '\n');
