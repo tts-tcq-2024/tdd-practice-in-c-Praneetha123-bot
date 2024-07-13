@@ -43,12 +43,12 @@ TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiter) {
     ASSERT_EQ(result, expectedresult);
 }
 
-// TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiterAtStart) {
-//     int expectedresult = 2;
-//     const char*  input = "\n2";
-//     int result = add(input);
-//     ASSERT_EQ(result, expectedresult);
-// }
+TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiterAtStart) {
+    int expectedresult = 2;
+    const char*  input = "\n2";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
+}
 
 // Test case for handling negative numbers
 TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
@@ -64,12 +64,7 @@ TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString) {
     ASSERT_EQ(result, expectedresult);
 }
 
-// TEST(StringCalculatorAddTests, ExpectSumWithEmpptyString_1) {
- 
-//     const char*  input = "/1";
-//     add(input);
 
-// }
 
 
 
