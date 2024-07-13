@@ -66,7 +66,6 @@ int parse_and_calculate(const char* input, const char* delimiters) {
 
     char message[256];
     if (check_negatives(numbers, count, message)) {
-        printf("%s\n", message);
         return -1; // Indicate an error
     }
 
